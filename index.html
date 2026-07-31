@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>جعبه ابزار متنی</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <header class="header">
+        <h1>جعبه ابزار توسعه</h1>
+        <div class="header-btns">
+            <button onclick="toggleTheme()" id="theme-btn">حالت شب</button>
+            <button onclick="openModal()">آخرین تغییرات</button>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="tabs">
+            <button class="tab-btn active" onclick="switchTab('tab-text', this)">پاکسازی متن</button>
+            <button class="tab-btn" onclick="switchTab('tab-minify', this)">Minifier (CSS/JS)</button>
+            <button class="tab-btn" onclick="switchTab('tab-keyboard', this)">اصلاح کیبورد</button>
+        </div>
+
+        <!-- تب اول: پاکسازی متن -->
+        <div id="tab-text" class="tab-content active">
+            <div class="textarea-wrapper">
+                <textarea id="text-input" placeholder="متن خود را اینجا وارد کنید..." dir="rtl"></textarea>
+                <div class="textarea-actions">
+                    <!-- با کلیک، هم ورودی و هم خروجی پاک می‌شود -->
+                    <button class="btn-clear" onclick="clearText('text-input', 'text-output')" title="پاک کردن فرم">پاک
+                        کردن</button>
+                    <button onclick="pasteText('text-input')" title="پیست کردن">پیست</button>
+                </div>
+            </div>
+
+            <button class="action-btn" onclick="processText()">پاکسازی و پردازش متن</button>
+
+            <div class="stats">
+                <div class="stat-item">
+                    <span class="stat-value" id="stat-zwnj">0</span>
+                    نیم‌فاصله به فاصله
+                </div>
+                <div class="stat-item">
+                    <span class="stat-value" id="stat-spaces">0</span>
+                    فاصله اضافه حذف شده
+                </div>
+                <div class="stat-item">
+                    <span class="stat-value" id="stat-hidden">0</span>
+                    کاراکتر مخفی حذف شده
+                </div>
+            </div>
+
+            <div class="textarea-wrapper">
+                <textarea id="text-output" placeholder="خروجی متن..." readonly dir="rtl"></textarea>
+                <div class="textarea-actions">
+                    <button onclick="copyText('text-output')" title="کپی کردن">کپی</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- تب دوم: Minify -->
+        <div id="tab-minify" class="tab-content">
+            <select id="minify-type">
+                <option value="css">CSS</option>
+                <option value="js">JavaScript</option>
+            </select>
+            <div class="textarea-wrapper">
+                <textarea id="code-input" placeholder="کدهای خود را اینجا قرار دهید..." dir="ltr"></textarea>
+                <div class="textarea-actions">
+                    <!-- با کلیک، هم ورودی و هم خروجی پاک می‌شود -->
+                    <button class="btn-clear" onclick="clearText('code-input', 'code-output')" title="پاک کردن فرم">پاک
+                        کردن</button>
+                    <button onclick="pasteText('code-input')" title="پیست کردن">پیست</button>
+                </div>
+            </div>
+
+            <button class="action-btn" onclick="minifyCode()">فشرده‌سازی (Minify)</button>
+
+            <div class="textarea-wrapper">
+                <textarea id="code-output" placeholder="کد فشرده شده خروجی..." readonly dir="ltr"></textarea>
+                <div class="textarea-actions">
+                    <button onclick="copyText('code-output')" title="کپی کردن">کپی</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- تب سوم: اصلاح کیبورد -->
+        <div id="tab-keyboard" class="tab-content">
+            <div class="textarea-wrapper">
+                <textarea id="keyboard-input" placeholder="متن انگلیسی که به اشتباه تایپ شده را وارد کنید (مثلا sghl)"
+                    dir="ltr"></textarea>
+                <div class="textarea-actions">
+                    <!-- با کلیک، هم ورودی و هم خروجی پاک می‌شود -->
+                    <button class="btn-clear" onclick="clearText('keyboard-input', 'keyboard-output')"
+                        title="پاک کردن فرم">پاک کردن</button>
+                    <button onclick="pasteText('keyboard-input')" title="پیست کردن">پیست</button>
+                </div>
+            </div>
+
+            <button class="action-btn" onclick="fixKeyboard()">تبدیل به فارسی</button>
+
+            <div class="textarea-wrapper">
+                <textarea id="keyboard-output" placeholder="خروجی متن اصلاح شده..." readonly dir="rtl"></textarea>
+                <div class="textarea-actions">
+                    <button onclick="copyText('keyboard-output')" title="کپی کردن">کپی</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- مودال Changelog -->
+    <div id="changelog-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>آخرین تغییرات</h2>
+                <button class="close-btn" onclick="closeModal()">&times;</button>
+            </div>
+            <ul class="changelog-list">
+                <li><strong>نسخه 1.3.1:</strong> دکمه پاک کردن (Clear) هر دو فیلد ورودی و خروجی را همزمان پاک می‌کند.
+                </li>
+                <li><strong>نسخه 1.3.0:</strong> افزودن دکمه پاک کردن به فیلدهای متنی.</li>
+                <li><strong>نسخه 1.2.0:</strong> افزودن دکمه‌های کپی و پیست سریع به تمام باکس‌های متنی.</li>
+                <li><strong>نسخه 1.1.0:</strong> افزودن ابزار «اصلاح کیبورد».</li>
+                <li><strong>نسخه 1.0.0:</strong> انتشار اولیه ابزار</li>
+            </ul>
+        </div>
+    </div>
+    <script src="script.js"></script>
+
+</body>
+
+</html>
