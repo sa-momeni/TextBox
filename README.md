@@ -80,49 +80,49 @@
 
 مثال:
 
-text
+```text
 sghl
-
+```
 خروجی:
 
-text
+```text
 سلام
-
+```
 نمونه‌های دیگر:
 
-text
+```text
 ;hvd
-
-text
+```
+```text
 کاری
-
-text
+```
+```text
 nvdh
-
-text
+```
+```text
 دریا
-
+```
 ## نحوه اجرا
 
 برای اجرای پروژه کافی است فایل HTML را در مرورگر باز کنید.
 
-text
+```text
 index.html
-
+```
 نیازی به نصب وابستگی، اجرای سرور یا تنظیمات اضافی نیست.
 
 ## ساختار پیشنهادی پروژه
 
 اگر پروژه را به صورت ساده نگه می‌دارید، ساختار زیر کافی است:
 
-text
+```text
 text-toolbox/
 ├── index.html
 └── README.md
-
+```
 در صورت توسعه بیشتر، می‌توانید ساختار را به این شکل تفکیک کنید:
 
-text
+```text
 text-toolbox/
 ├── index.html
 ├── README.md
@@ -132,7 +132,7 @@ text-toolbox/
 │   └── style.css
 └── js/
 └── app.js
-
+```
 ## فناوری‌های استفاده‌شده
 
 - HTML5
@@ -170,15 +170,15 @@ text-toolbox/
 
 کلید ذخیره‌شده:
 
-text
+```text
 theme
-
+```
 مقادیر ممکن:
 
-text
+```text
 light
 dark
-
+```
 ## حریم خصوصی
 
 این ابزار به صورت کامل در مرورگر کاربر اجرا می‌شود.
@@ -246,7 +246,7 @@ dark
 در صورت توسعه پروژه، بهتر است منطق پردازش متن از DOM جدا شود تا تست‌پذیری افزایش پیدا کند.
 
 نمونه ساختار پیشنهادی برای توسعه:
-
+```text
 javascript
 function normalizeText(input) {
   // pure function
@@ -259,7 +259,7 @@ spaces: 0
 }
   };
 }
-
+```
 مزیت این رویکرد:
 
 - تست‌نویسی ساده‌تر
@@ -273,7 +273,7 @@ spaces: 0
 
 نمونه متن مجوز:
 
-text
+```text
 MIT License
 
 Copyright (c) 2026
@@ -283,7 +283,7 @@ of this software and associated documentation files, to deal in the Software
 without restriction, including without limitation the rights to use, copy,
 modify, merge, publish, distribute, sublicense, and/or sell copies of the
 Software.
-
+```
 ## وضعیت پروژه
 
 نسخه فعلی پروژه پایدار و قابل استفاده برای پردازش‌های سبک متنی و توسعه روزمره است.
