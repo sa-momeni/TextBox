@@ -28,7 +28,7 @@
     box-sizing: border-box;
     margin: 0;
     padding: 0;
-    font-family: IRANSansX, system-ui, -apple-system, Tahoma, sans-serif;
+    font-family: Vazir, system-ui, -apple-system, Tahoma, sans-serif;
 }
 
 body {
@@ -38,6 +38,14 @@ body {
     line-height: 1.6;
 }
 
+/* Wrapper اصلی برای قرار دادن کل محتوا در مرکز */
+.main-wrapper {
+    max-width: 900px;
+    margin: 30px auto;
+    padding: 0 15px;
+    /* برای فاصله از لبه‌ها در موبایل */
+}
+
 .header {
     display: flex;
     justify-content: space-between;
@@ -45,7 +53,9 @@ body {
     padding: 15px 20px;
     background-color: var(--container-bg);
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-    border-bottom: 1px solid var(--border-color);
+    border-radius: 8px;
+    margin-bottom: 20px;
+    /* فاصله از کانتینر پایینی */
 }
 
 .header h1 {
@@ -71,8 +81,6 @@ body {
 }
 
 .container {
-    max-width: 900px;
-    margin: 30px auto;
     background-color: var(--container-bg);
     border-radius: 8px;
     box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
@@ -166,6 +174,12 @@ textarea {
     border-color: var(--danger-color);
 }
 
+.action-btns {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 15px;
+}
+
 .action-btn {
     display: block;
     width: 100%;
@@ -178,7 +192,6 @@ textarea {
     cursor: pointer;
     transition: 0.3s;
     font-family: inherit;
-    margin-bottom: 15px;
 }
 
 .action-btn:hover {
@@ -275,6 +288,20 @@ select {
     font-weight: bold;
 }
 
+.bottom-info {
+    display: flex;
+    justify-content: space-between;
+    padding: 16px 8px;
+    font-weight: 100;
+    font-size: 0.8rem;
+}
+
+.bottom-info a {
+    text-decoration: none;
+    color: inherit;
+    font-weight: bold;
+}
+
 @media (max-width: 600px) {
     .header {
         flex-direction: column;
@@ -293,5 +320,9 @@ select {
 
     .stat-value {
         font-size: 1.2rem;
+    }
+
+    .action-btns {
+        flex-direction: column;
     }
 }

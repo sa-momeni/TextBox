@@ -1,9 +1,7 @@
-// تابع پاک کردن متن - ویرایش شده برای دریافت هر دو آیدی ورودی و خروجی
 function clearText(inputId, outputId) {
     document.getElementById(inputId).value = '';
     document.getElementById(outputId).value = '';
 
-    // در صورتی که در تب اول باشیم، آمارهای متن هم صفر شوند
     if (inputId === 'text-input') {
         document.getElementById('stat-zwnj').innerText = '0';
         document.getElementById('stat-spaces').innerText = '0';
@@ -11,13 +9,11 @@ function clearText(inputId, outputId) {
     }
 }
 
-// توابع کپی و پیست
 function copyText(elementId) {
     const el = document.getElementById(elementId);
     el.select();
-    el.setSelectionRange(0, 99999); // برای موبایل
+    el.setSelectionRange(0, 99999);
     navigator.clipboard.writeText(el.value).then(() => {
-        // نمایش بازخورد موقت
         const btn = event.currentTarget;
         const originalText = btn.innerHTML;
         btn.innerHTML = '✅ کپی شد';
@@ -39,7 +35,6 @@ async function pasteText(elementId) {
     }
 }
 
-// مدیریت تب‌ها
 function switchTab(tabId, element) {
     document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
     document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
@@ -48,7 +43,6 @@ function switchTab(tabId, element) {
     element.classList.add('active');
 }
 
-// مدیریت حالت شب
 function toggleTheme() {
     const body = document.body;
     const isDark = body.getAttribute('data-theme') === 'dark';
@@ -65,7 +59,6 @@ function toggleTheme() {
     }
 }
 
-// بررسی تم ذخیره شده
 window.onload = () => {
     if (localStorage.getItem('theme') === 'dark') {
         document.body.setAttribute('data-theme', 'dark');
@@ -73,7 +66,6 @@ window.onload = () => {
     }
 }
 
-// مدیریت Modal
 function openModal() {
     document.getElementById('changelog-modal').style.display = 'flex';
 }
@@ -89,7 +81,6 @@ window.onclick = function (event) {
     }
 }
 
-// پردازش متن
 function processText() {
     let text = document.getElementById('text-input').value;
 
@@ -112,7 +103,6 @@ function processText() {
     document.getElementById('stat-spaces').innerText = spacesCount;
 }
 
-// فشرده‌سازی کد
 function minifyCode() {
     let code = document.getElementById('code-input').value;
     const type = document.getElementById('minify-type').value;
@@ -125,14 +115,14 @@ function minifyCode() {
         code = code.replace(/\/\*[\s\S]*?\*\//g, '');
         code = code.replace(/\/\/.*/g, '');
         code = code.replace(/\s+/g, ' ');
-        code = code.replace(/\s*([=+\-*/<>{}()[\\\\];,.:])\s*/g, '$1');
+        code = code.replace(/\s*([=+\-*/<>{}()[\\\\\\];,.:])\s*/g, '$1');
     }
 
     document.getElementById('code-output').value = code.trim();
 }
 
-// اصلاح کیبورد
-function fixKeyboard() {
+// اصلاح کیبورد - ویرایش شده برای پشتیبانی از هر دو جهت
+function fixKeyboard(direction) {
     const faChars = {
         'q': 'ض', 'w': 'ص', 'e': 'ث', 'r': 'ق', 't': 'ف', 'y': 'غ', 'u': 'ع', 'i': 'ه', 'o': 'خ', 'p': 'ح', '[': 'ج', ']': 'چ', '\\': 'پ',
         'a': 'ش', 's': 'س', 'd': 'ی', 'f': 'ب', 'g': 'ل', 'h': 'ا', 'j': 'ت', 'k': 'ن', 'l': 'م', ';': 'ک', "'": 'گ',
@@ -142,13 +132,29 @@ function fixKeyboard() {
         'Z': 'ك', 'X': 'ٓ', 'C': 'ژ', 'V': 'ٰ', 'B': '\u200C', 'N': 'ٔ', 'M': 'ء'
     };
 
+    // ساخت دیکشنری معکوس برای تبدیل فارسی به انگلیسی
+    const enChars = {};
+    for (const key in faChars) {
+        enChars[faChars[key]] = key;
+    }
+
     const input = document.getElementById('keyboard-input').value;
+    const outputEl = document.getElementById('keyboard-output');
     let output = '';
+
+    const map = direction === 'toFa' ? faChars : enChars;
 
     for (let i = 0; i < input.length; i++) {
         const char = input[i];
-        output += faChars[char] !== undefined ? faChars[char] : char;
+        output += map[char] !== undefined ? map[char] : char;
     }
 
-    document.getElementById('keyboard-output').value = output;
+    outputEl.value = output;
+
+    // تنظیم راست‌چین یا چپ‌چین شدن خروجی بسته به زبان
+    if (direction === 'toEn') {
+        outputEl.setAttribute('dir', 'ltr');
+    } else {
+        outputEl.setAttribute('dir', 'rtl');
+    }
 }
